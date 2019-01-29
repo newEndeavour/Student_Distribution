@@ -63,21 +63,23 @@ class Student_Distribution
   // user-accessible "public" interface
   public:
   // methods
-	Student_Distribution(float _Nu);
+	Student_Distribution(double _Nu);
 	
-	float 	GetPDF(float x);
-	float 	GetPDF_2(float x);
-	float 	GetCDF(float x);
-	float 	GetQuantile(float p);
+	double 	GetPDF(double x);
+	double 	GetPDF_2(double x);
+	double 	GetCDF(double x);
+	double 	GetQuantile(double p);
 
-	float 	GetNu(void);
+	double 	GetArcTan(double x);
+
+	double 	GetNu(void);
 
   // library-accessible "private" interface
   private:
   // variables
 	int 	error;
 
-	float	Nu;			// 
+	double	Nu;			// 
 	
   // methods
 };

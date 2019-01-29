@@ -31,6 +31,7 @@
 
 
 #include "Arduino.h"
+#include <math.h>
 #include "Student_Distribution.h"
 #include "Gamma_Function.h"
 
@@ -38,7 +39,7 @@
 // Constructor /////////////////////////////////////////////////////////////////
 // Function that handles the creation and setup of instances
 
-Student_Distribution::Student_Distribution(float _Nu)
+Student_Distribution::Student_Distribution(double _Nu)
 {
 
 	// Object parameter's error handling
@@ -52,9 +53,17 @@ Student_Distribution::Student_Distribution(float _Nu)
 
 // Public Methods //////////////////////////////////////////////////////////////
 //Probability Density Function
-float Student_Distribution::GetPDF(float x)
+double Student_Distribution::GetPDF(double x)
 {
-    return ( Gamma_Function(Nu/2+1/2) * (pow(1+pow(x,2)/Nu,-(Nu+1)/2)) ) / (sqrt(Nu*CONSTANT_Pi) * Gamma_Function(Nu/2));
+	//Particular cases
+	if (Nu==1) 
+		return 1/(CONSTANT_Pi * (1+x*x));
+
+	if (Nu==2) 
+		return 1/(pow(1+x*x,3/2));
+
+	//General cases
+    	return ( Gamma_Function(Nu/2+1/2) * (pow(1+pow(x,2)/Nu,-(Nu+1)/2)) ) / (sqrt(Nu*CONSTANT_Pi) * Gamma_Function(Nu/2));
 }
 
 
@@ -73,23 +82,37 @@ double HyperGeometric_Function(double a, double b, double c, double d)
 //	- 1F2 	: Hypergeometric function
 //	- G	: Gamma function
 //	 
-float Student_Distribution::GetCDF(float x)
+double Student_Distribution::GetCDF(double x)
 {
-    return ( 1/2 + x*Gamma_Function(Nu/2+1/2) * 
-	HyperGeometric_Function(1/2,Nu/2+1/2,3/2,-pow(x,2)/Nu)/(sqrt(Nu*CONSTANT_Pi) * Gamma_Function(Nu/2)) );
+	//Particular cases
+	if (Nu==1)
+		return 0.5 + atan(x) / CONSTANT_Pi;			//atan() is the arc tangent function
+	if (Nu==2) 
+		return 0.5 + x/(2*sqrt(2+x*x));
+
+	//General cases
+	return ( 0.5 + x*Gamma_Function(Nu/2+1/2) * 
+		HyperGeometric_Function(1/2,Nu/2+1/2,3/2,-pow(x,2)/Nu)/(sqrt(Nu*CONSTANT_Pi) * Gamma_Function(Nu/2)) );
+}
+
+
+
+double Student_Distribution::GetArcTan(double x)
+{
+	return atan(x);
 }
 
 
 //Return Quantile z(P) from probability P
-float Student_Distribution::GetQuantile(float p)
+double Student_Distribution::GetQuantile(double p)
 {
-float Vm;
-float Vh = 16;
-float Vl = -16;
-float Pr;
+double Vm;
+double Vh = 300;
+double Vl = -300;
+double Pr;
 int i = 0;
-float Eps;
-
+double Eps;
+	
 	if (p <= 0.0) {
 		return Vl;
 	} else if (p >= 1.0) {
@@ -144,7 +167,7 @@ float Eps;
 }
 
 
-float Student_Distribution::GetNu(void)
+double Student_Distribution::GetNu(void)
 {
 	return Nu;
 }
