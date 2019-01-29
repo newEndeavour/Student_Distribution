@@ -1,13 +1,9 @@
 /*
   File:         Student_Distribution.h
-  Version:      0.0.1
+  Version:      0.0.2
   Date:         27-Jan-2019
-  Revision:     27-Jan-2019
+  Revision:     29-Jan-2019
   Author:       Jerome Drouin (jerome.p.drouin@gmail.com)
-
-  Editions:
-  - 0.0.1	: First version
-  - 0.0.2	: -
 
   Student_Distribution.h - Library for 'duino
   https://github.com/newEndeavour/Student_Distribution
@@ -30,6 +26,14 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+  Editions:
+  - 0.0.1	: First version
+  - 0.0.2	: Corrections for PDF and CDF for particular cases where Nu=1 (the
+		  Cauchy distribution) or Nu=2. 
+		  Added ArcTan function.
+		  Extended the validity domain of boundaries for GetQuantile.
+		  
+
 */
 
 
@@ -46,11 +50,6 @@
 
 
 //Student Constant Parameters
-#define CONSTANT_aa 0.2316419
-#define CONSTANT_b1 1.330274429#define CONSTANT_b2 1.821255978
-#define CONSTANT_b3 1.781477937
-#define CONSTANT_b4 0.356563782
-#define CONSTANT_b5 0.31938153
 #define CONSTANT_EpsStop 0.0000001
     
 //Number Pi
@@ -66,7 +65,6 @@ class Student_Distribution
 	Student_Distribution(double _Nu);
 	
 	double 	GetPDF(double x);
-	double 	GetPDF_2(double x);
 	double 	GetCDF(double x);
 	double 	GetQuantile(double p);
 

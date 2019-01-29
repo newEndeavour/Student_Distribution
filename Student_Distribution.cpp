@@ -1,8 +1,8 @@
 /*
   File:         Student_Distribution.cpp
-  Version:      0.0.1
+  Version:      0.0.2
   Date:         23-Jan-2019
-  Revision:     23-Jan-2019
+  Revision:     29-Jan-2019
   Author:       Jerome Drouin (jerome.p.drouin@gmail.com)
 
   Editions:	Please go to Student_Distribution.h for Edition Notes.
@@ -94,7 +94,6 @@ double Student_Distribution::GetCDF(double x)
 	return ( 0.5 + x*Gamma_Function(Nu/2+1/2) * 
 		HyperGeometric_Function(1/2,Nu/2+1/2,3/2,-pow(x,2)/Nu)/(sqrt(Nu*CONSTANT_Pi) * Gamma_Function(Nu/2)) );
 }
-
 
 
 double Student_Distribution::GetArcTan(double x)
