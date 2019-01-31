@@ -66,10 +66,16 @@ class Student_Distribution
 	
 	double 	GetPDF(double x);
 	double 	GetCDF(double x);
+
+	double 	GetMean(void);
+	double 	GetVariance(void);
+	double 	GetStdDeviation(void);
+	double 	GetSkewness(void);
+	double 	GetKurtosis(void);
+
 	double 	GetQuantile(double p);
 
 	double 	GetArcTan(double x);
-
 	double 	GetNu(void);
 
   // library-accessible "private" interface
