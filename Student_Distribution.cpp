@@ -1,8 +1,8 @@
 /*
   File:         Student_Distribution.cpp
-  Version:      0.0.2
+  Version:      0.0.3
   Date:         23-Jan-2019
-  Revision:     30-Jan-2019
+  Revision:     01-Feb-2019
   Author:       Jerome Drouin (jerome.p.drouin@gmail.com)
 
   Editions:	Please go to Student_Distribution.h for Edition Notes.
@@ -86,7 +86,6 @@ double ln_density;
 //Cumulative Distribution Function
 double Student_Distribution::GetCDF(double x)
 {
-double a = (double) Nu / 2.0;
 double beta;
 
 	if (error<0)
@@ -102,8 +101,9 @@ double beta;
 	//F(x) = 1/2 + x.G((Nu+1)/2 * 1F2(1/2,(Nu+1)/2,3/2,-x^2/Nu) / (sqrt(Nu*Pi) * G(Nu/2))
 	//return ( 0.5 + x*Gamma_Function(.5*(Nu+1)) * 
 	//	HyperGeometric(.5,.5*(Nu+1),1.5,-x*x/Nu)/(sqrt(Nu*CONSTANT_Pi) * Gamma_Function(.5*Nu)) );
+		
+	beta = Beta_Distribution_Func(1/(1+(x*x/Nu)),0.5*Nu,0.5);
 	
-	beta = Beta_Distribution(1/(1+x*x/Nu),a,0.5);
 	if (x>0.0) 
 		return 1-.5*beta;
    	else if (x<0.0) 
@@ -191,6 +191,17 @@ double 	Student_Distribution::GetKurtosis(void)
 			return DBL_MAX;
 		else
 			return -9999;
+}
+
+
+//Entropy
+double 	Student_Distribution::GetEntropy(void)
+{
+	if (error<0)
+		return error;
+
+	return .5*(Nu+1) * (DiGamma_Function(.5*(Nu+1)) - DiGamma_Function(.5*Nu)) 
+			+ log(sqrt(Nu) * Beta_Function(.5,.5*Nu)) ;
 }
 
 

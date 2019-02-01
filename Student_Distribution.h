@@ -1,8 +1,8 @@
 /*
   File:         Student_Distribution.h
-  Version:      0.0.2
+  Version:      0.0.3
   Date:         27-Jan-2019
-  Revision:     29-Jan-2019
+  Revision:     01-Feb-2019
   Author:       Jerome Drouin (jerome.p.drouin@gmail.com)
 
   Student_Distribution.h - Library for 'duino
@@ -32,6 +32,7 @@
 		  Cauchy distribution) or Nu=2. 
 		  Added ArcTan function.
 		  Extended the validity domain of boundaries for GetQuantile.
+  - 0.0.3	: Entropy added.
 		  
 
 */
@@ -72,6 +73,7 @@ class Student_Distribution
 	double 	GetStdDeviation(void);
 	double 	GetSkewness(void);
 	double 	GetKurtosis(void);
+	double 	GetEntropy(void);
 
 	double 	GetQuantile(double p);
 
